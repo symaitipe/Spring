@@ -75,7 +75,24 @@ public class ProductController {
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+    }
 
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+        Product product = services.getProductById(id);
+        if (product != null) {
+            services.deleteProduct(id);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/product/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) {
+        List<Product> products = services.searchProducts(keyword);
+        System.out.println("searching with :" + keyword);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
 }

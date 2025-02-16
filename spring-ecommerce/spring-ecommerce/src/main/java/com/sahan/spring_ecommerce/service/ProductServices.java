@@ -30,4 +30,11 @@ public class ProductServices {
         return repo.findById(id).orElse(new Product(-1));
     }
 
+    public void deleteProduct(int id) {
+        repo.deleteById(id);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        return repo.searchProducts(keyword);
+    }
 }
