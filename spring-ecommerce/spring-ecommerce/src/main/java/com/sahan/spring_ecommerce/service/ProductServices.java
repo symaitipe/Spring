@@ -20,4 +20,8 @@ public class ProductServices {
         repo.save(product);
         return "Success";
     }
+
+    public Product getProductById(int id) {
+        return repo.findById(id).orElse(new Product(-1));
+    }
 }
