@@ -47,7 +47,7 @@ public class ProductController {
     public ResponseEntity<?> addProduct(@RequestPart Product product, @RequestPart MultipartFile imageFile){
         Product savedProduct = null;
         try {
-             savedProduct = services.addProduct(product,imageFile);
+             savedProduct = services.addOrUpdateProduct(product,imageFile);
              return new ResponseEntity<>(savedProduct,HttpStatus.CREATED);
         } catch (IOException e) {
 
@@ -66,5 +66,16 @@ public class ProductController {
     }
 
 
+    @PutMapping("/product/{id}")
+    public ResponseEntity<Product> updateById(@RequestPart Product product, @RequestPart MultipartFile imageFile){
+
+            try {
+               Product updatedProduct =  services.addOrUpdateProduct(product,imageFile);
+                return new ResponseEntity<>(updatedProduct,HttpStatus.OK);
+            } catch (IOException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+    }
 
 }
