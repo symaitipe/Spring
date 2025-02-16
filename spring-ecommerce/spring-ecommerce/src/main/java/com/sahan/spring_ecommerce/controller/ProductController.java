@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-
+@CrossOrigin
 public class ProductController {
 
     @Autowired
@@ -53,8 +53,18 @@ public class ProductController {
 
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
+
+    @GetMapping("/product/{productId}/image")
+    public ResponseEntity<byte[]> getImagewithProduct(@PathVariable("productId") int id){
+        Product product =null;
+        product = services.getProductById(id);
+        if(product.getId()>0){
+            return new ResponseEntity<>(product.getImageData(),HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 
 }
